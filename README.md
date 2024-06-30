@@ -1,2 +1,2 @@
-# MY OWN SITE
-This is my own site.
+# HI
+Got my own site running at Bullishdrake09.com
