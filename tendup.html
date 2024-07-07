@@ -19,13 +19,14 @@
             justify-content: center;
             align-items: center;
         }
-        /* Set the iframe to occupy the full space of the container */
         iframe {
             border: none;
             width: 100%;
             height: 100%;
         }
-        /* Developer tool message */
+        .dev-note {
+            display: none;
+        }
         .dev-note::before {
             content: "TENDUP";
             font-size: 50px;
@@ -44,10 +45,24 @@
 </head>
 <body>
     <!-- This iframe is a copy of my own website and that's the reason it's iframed. -->
-    <div class="container dev-note">
+    <div class="container">
         <iframe src="https://bullishdrake09.github.io/TendUP/" frameborder="0">
             Your browser doesn't support iFrames.
         </iframe>
     </div>
+    <div class="dev-note"></div>
+    <script>
+        (function() {
+            var devNote = document.querySelector('.dev-note');
+            function checkDevTools() {
+                if (devNote.offsetWidth || devNote.offsetHeight) {
+                    devNote.style.display = 'block';
+                } else {
+                    devNote.style.display = 'none';
+                }
+            }
+            setInterval(checkDevTools, 100);
+        })();
+    </script>
 </body>
 </html>
