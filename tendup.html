@@ -50,29 +50,5 @@
             Your browser doesn't support iFrames.
         </iframe>
     </div>
-    <div class="dev-note"></div>
-    <script>
-        (function() {
-            var devNote = document.querySelector('.dev-note');
-            var devToolsOpened = false;
-
-            function detectDevTools() {
-                var widthThreshold = window.outerWidth - window.innerWidth > 100;
-                var heightThreshold = window.outerHeight - window.innerHeight > 100;
-                var opened = widthThreshold || heightThreshold;
-
-                if (opened && !devToolsOpened) {
-                    devNote.style.display = 'block';
-                    devToolsOpened = true;
-                } else if (!opened && devToolsOpened) {
-                    devNote.style.display = 'none';
-                    devToolsOpened = false;
-                }
-            }
-
-            detectDevTools();
-            setInterval(detectDevTools, 1000);
-        })();
-    </script>
 </body>
 </html>
