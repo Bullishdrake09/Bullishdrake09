@@ -61,3 +61,29 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const text = "Lunar Hub";
+    const typingSpeed = 200; // Delay between each character
+    const resetDelay = 1000; // Delay before restarting typing
+    let index = 0;
+    let direction = 1; // 1 for forward, -1 for backward
+
+    function type() {
+        const typedLogo = document.getElementById("typed-logo");
+        typedLogo.textContent = text.slice(0, index);
+
+        index += direction;
+
+        if (index === text.length + 1) {
+            direction = -1;
+            setTimeout(type, resetDelay);
+        } else if (index === 0) {
+            direction = 1;
+            setTimeout(type, typingSpeed);
+        } else {
+            setTimeout(type, typingSpeed);
+        }
+    }
+
+    type();
+});
