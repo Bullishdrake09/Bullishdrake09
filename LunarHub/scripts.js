@@ -14,7 +14,18 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("discord-count").textContent = "Error";
         });
 
-    // Smooth Scroll
+    // Fetch and display server count
+    fetch("https://your-domain.com/getServerCount")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("server-count").textContent = data.serverCount;
+        })
+        .catch(error => {
+            console.error('Error fetching server count:', error);
+            document.getElementById("server-count").textContent = "Error";
+        });
+
+    // Smooth Scroll (already implemented)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -24,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
 
 
 const canvas = document.createElement('canvas');
