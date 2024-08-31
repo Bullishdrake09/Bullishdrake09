@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="https://raw.githubusercontent.com/Bullishdrake09/Bullishdrake09/main/Pictures/ico.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bullishdrake09</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            color: #f0f0f0;
+        }
+
+        .background-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-gif iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 90%;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            max-height: 80vh;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .container::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            font-size: 36px;
+            color: #f0f0f0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid rgba(255, 255, 255, 0.75);
+            width: 100%;
+            animation: typewriter 4s steps(40) 1s 1 normal both,
+                blinkTextCursor 500ms steps(40) infinite normal;
+        }
+
+        h3 {
+            margin-bottom: 40px;
+            font-size: 20px;
+            color: #cccccc;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 20px;
+            position: relative;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        a:hover {
+            color: #f0f0f0;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            transform: translateY(-3px);
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blinkTextCursor {
+            from {
+                border-right-color: rgba(255, 255, 255, 0.75);
+            }
+
+            to {
+                border-right-color: transparent;
+            }
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-gif">
+        <iframe src="https://tenor.com/embed/20902822" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to my site.</h1>
+        <h3>Searching for any file or site? You'll probably find it here.</h3>
+        <ul>
+            <li><a href="https://www.tiktok.com/@bullishdrake" target="_blank">TikTok</a></li>
+            <li><a href="https://www.twitch.tv/bullishdrake09" target="_blank">Twitch</a></li>
+            <li><a href="https://discord.gg/xCEEFZmdDA" target="_blank">Discord Server</a></li>
+            <li><a href="https://github.com/Bullishdrake09" target="_blank">GitHub</a></li>
+            <li><a href="games.html" target="_blank">Bullishdrake's games</a></li>
+            <li><a href="https://github.com/Bullishdrake09/FSR_MOD_APP" target="_blank">FSR Mod App</a></li>
+            <li><a href="https://beatleader.xyz/u/76561199175070337" target="_blank">Beatleader</a></li>
+            <li><a href="EasyJITEnabler.html" target="_blank">EasyJITEnabler</a></li>
+            <li><a href="tendup.html" target="_blank">TendUP</a></li>
+            <li><a href="moviestreaming.html" target="_blank">Movie Streaming</a></li>
+            <li><a href="https://chromewebstore.google.com/detail/adblock-plus-gratis-adblo/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank">Recommended Adblocker for Movie Streaming</a></li>
+            <li><a href="mbf.html" target="_blank">ModsBeforeFriday</a></li>
+            <li><a href="LunarHub/index.html" target="_blank">Lunar Hub</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>
