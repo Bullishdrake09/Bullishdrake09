@@ -12,21 +12,14 @@ html, body {
 /* Header stijlen */
 header {
     background-color: #1f1f1f;
-    padding: 10px 0;
+    padding: 15px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    margin: 0;
 }
-
-/* Reset van andere elementen */
-* {
-    box-sizing: border-box;
-}
-
 
 nav {
     display: flex;
@@ -38,15 +31,17 @@ nav {
 }
 
 nav .logo {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: #007BFF;
+    padding: 5px 10px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
+    padding: 5px 10px;
 }
 
 nav ul li a {
@@ -60,27 +55,29 @@ nav ul li a:hover {
     color: #007BFF;
 }
 
+/* Hero Section */
 .hero {
     background-color: #1a1a1a;
-    padding: 100px 20px 60px;
+    padding: 120px 20px 60px;
     text-align: center;
     color: #fff;
-    margin-top: 60px;
+    margin-top: 70px;
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 44px;
     margin-bottom: 20px;
     animation: fadeIn 1s ease-in;
 }
 
 .hero p {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 30px;
     animation: fadeIn 2s ease-in;
 }
@@ -88,7 +85,7 @@ nav ul li a:hover {
 .cta-button {
     background-color: #007BFF;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
     font-size: 18px;
@@ -100,6 +97,7 @@ nav ul li a:hover {
     background-color: #0056b3;
 }
 
+/* Sections */
 .services,
 .pricing,
 .about,
@@ -109,22 +107,21 @@ nav ul li a:hover {
 }
 
 h2 {
-    font-size: 28px;
+    font-size: 30px;
     margin-bottom: 20px;
     color: #007BFF;
 }
 
 .services-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
 .service-item {
-    flex-basis: 30%;
     background-color: #1f1f1f;
-    margin: 20px 0;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     transition: transform 0.3s;
 }
@@ -144,6 +141,7 @@ h2 {
     transform: translateY(-10px);
 }
 
+/* Pricing Table */
 .pricing table {
     width: 100%;
     max-width: 600px;
@@ -152,6 +150,7 @@ h2 {
     background-color: #1f1f1f;
     border-radius: 10px;
     overflow: hidden;
+    padding: 20px;
 }
 
 .pricing th, .pricing td {
@@ -163,18 +162,22 @@ h2 {
 .pricing th {
     background-color: #333;
     color: #007BFF;
+    padding: 15px 20px;
 }
 
 .pricing td {
     color: #bdbdbd;
+    padding: 10px 20px;
 }
 
+/* Contact Form */
 .contact form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     max-width: 600px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 .contact input,
@@ -211,11 +214,11 @@ footer {
     background-color: #1f1f1f;
     color: #bdbdbd;
     text-align: center;
-    padding: 20px 0;
+    padding: 25px 0;
     margin-top: 20px;
 }
 
-/* Animaties */
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -232,7 +235,7 @@ footer {
     }
 }
 
-/* Scrolling Animaties */
+/* Scrolling Animations */
 .animate-in {
     opacity: 0;
     transform: translateY(50px);
@@ -243,3 +246,4 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
