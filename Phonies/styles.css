@@ -1,0 +1,245 @@
+/* Algemene instellingen */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header stijlen */
+header {
+    background-color: #1f1f1f;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+}
+
+/* Reset van andere elementen */
+* {
+    box-sizing: border-box;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #e0e0e0;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #007BFF;
+}
+
+.hero {
+    background-color: #1a1a1a;
+    padding: 100px 20px 60px;
+    text-align: center;
+    color: #fff;
+    margin-top: 60px;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    animation: fadeIn 2s ease-in;
+}
+
+.cta-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    animation: fadeInUp 3s ease-in;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+.services,
+.pricing,
+.about,
+.contact {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+.services-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.service-item {
+    flex-basis: 30%;
+    background-color: #1f1f1f;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.service-item h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.service-item p {
+    font-size: 16px;
+    color: #bdbdbd;
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+}
+
+.pricing table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pricing th, .pricing td {
+    border: 1px solid #333;
+    padding: 15px;
+    text-align: center;
+}
+
+.pricing th {
+    background-color: #333;
+    color: #007BFF;
+}
+
+.pricing td {
+    color: #bdbdbd;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact input,
+.contact textarea {
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+}
+
+.contact button {
+    background-color: #007BFF;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.contact button:hover {
+    background-color: #0056b3;
+}
+
+.contact-info {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+footer {
+    background-color: #1f1f1f;
+    color: #bdbdbd;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+/* Animaties */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrolling Animaties */
+.animate-in {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
