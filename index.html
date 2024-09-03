@@ -22,27 +22,15 @@
             color: #f0f0f0;
         }
 
-        .background-gif {
+        #matrix {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
             z-index: -1;
+            background: black;
         }
-
-        .background-gif iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-               pointer-events: none; /* Prevent interaction with the iframe */
-            object-fit: cover; /* Ensure the video covers the background completely */
-        }
-
 
         .container {
             max-width: 900px;
@@ -162,9 +150,7 @@
 </head>
 
 <body>
-    <div class="background-gif">
-        <iframe src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Computer-screen-code-glitch-animation-gif-background-free.gif/1280px-Computer-screen-code-glitch-animation-gif-background-free.gif" frameborder="0" allowfullscreen></iframe>
-    </div>
+    <canvas id="matrix"></canvas>
 
     <div class="container">
         <h1>Welcome to my site.</h1>
@@ -186,6 +172,47 @@
             <li><a href="LunarHub/index.html" target="_blank">Lunar Hub</a></li>
         </ul>
     </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = Array(256).join("1").split("");
+
+        let fontSize = 12;
+        let columns = canvas.width / fontSize;
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0F0"; // Set font color to green
+            ctx.font = fontSize + "px arial";
+
+            letters.map((yPos, index) => {
+                const text = String.fromCharCode(3e4 + Math.random() * 33);
+                const xPos = index * fontSize;
+                ctx.fillText(text, xPos, yPos);
+
+                if (yPos > canvas.height && Math.random() > 0.975) {
+                    letters[index] = 0;
+                }
+
+                letters[index] = yPos + fontSize;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = canvas.width / fontSize;
+        });
+    </script>
 </body>
 
 </html>
