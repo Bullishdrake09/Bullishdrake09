@@ -1,4 +1,4 @@
-/* General Settings */
+/* Algemene instellingen */
 html, body {
     margin: 0;
     padding: 0;
@@ -129,7 +129,7 @@ nav ul li a:hover {
     transform: translateY(-5px);
 }
 
-/* Sections */
+/* Secties */
 section {
     padding: 80px 20px;
     text-align: center;
@@ -291,5 +291,32 @@ footer {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 15px 0;
+    }
+
+    nav .logo {
+        font-size: 24px;
+    }
+
+    .cta-button {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+
+    section {
+        padding: 60px 15px;
+    }
+
+    .contact form {
+        padding: 30px 15px;
+    }
+
+    .pricing table {
+        font-size: 14px;
     }
 }
