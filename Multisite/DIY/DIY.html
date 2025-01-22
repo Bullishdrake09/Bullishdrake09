@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY Tutorials</title>
+    <link rel="stylesheet" href="diy.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DIY by Bullishdrake09</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#tutorials">Tutorials</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>DIY Tutorials</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Zoek een tutorial...">
+        </div>
+        <div class="tutorial-list" id="tutorialList">
+            <div class="tutorial-item">
+                <img src="https://www.tenforums.com/attachments/installation-upgrade/273406d1586233978t-custom-windows-10-setup-image-background-2020_04_07_00_32_06_windows_installation_images_google_search.png" alt="Example 1">
+                <h3><a href="tutorials/installwindows.html">Hoe installeer je Windows?</a></h3>
+                <p>Leer stap voor stap hoe je een nieuw OS installeert.</p>
+            </div>
+            <div class="tutorial-item">
+                <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/wm/2025/01/graphics-card-inside-a-pc.jpg" alt="Example 2">
+                <h3><a href="tutorials/tutorial_example2.html">Hoe upgrade je je GPU?</a></h3>
+                <p>Volg deze stappen om je GPU succesvol te upgraden.</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 DIY by Bullishdrake09. Alle rechten voorbehouden.</p>
+    </footer>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const tutorials = document.querySelectorAll('.tutorial-item');
+            tutorials.forEach(tutorial => {
+                const title = tutorial.querySelector('h3').innerText.toLowerCase();
+                tutorial.style.display = title.includes(filter) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

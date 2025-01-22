@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bullish PC Builder</title>
+    <link rel="stylesheet" href="bullish_pcs.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Bullish PC's</div>
+            <ul>
+                <li><a href="bullish_pcs_build.html">PC Samenstellen</a></li>
+                <li><a href="bullish_pcs_services.html">Reparatie & Aankoop</a></li>
+                <li><a href="diy.html">Terug naar DIY</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h1>Bullish PC Samenstellen</h1>
+            <form id="pc-form">
+                <div class="form-group">
+                    <label for="cpu">Kies je CPU:</label>
+                    <select id="cpu" name="cpu">
+                        <option value="0">-- Selecteer een optie --</option>
+                        <option value="350">Ryzen 5 5600X - €350</option>
+                        <option value="450">Ryzen 7 5800X - €450</option>
+                        <option value="300">Intel i5-12600K - €300</option>
+                        <option value="500">Intel i7-13700K - €500</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gpu">Kies je GPU:</label>
+                    <select id="gpu" name="gpu">
+                        <option value="0">-- Selecteer een optie --</option>
+                        <option value="600">NVIDIA RTX 3060 - €600</option>
+                        <option value="1200">NVIDIA RTX 3080 - €1200</option>
+                        <option value="1400">NVIDIA RTX 4070 - €1400</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ram">Kies je RAM:</label>
+                    <select id="ram" name="ram">
+                        <option value="0">-- Selecteer een optie --</option>
+                        <option value="100">16GB DDR4 - €100</option>
+                        <option value="180">32GB DDR4 - €180</option>
+                        <option value="220">32GB DDR5 - €220</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="storage">Kies je opslag:</label>
+                    <select id="storage" name="storage">
+                        <option value="0">-- Selecteer een optie --</option>
+                        <option value="80">500GB SSD - €80</option>
+                        <option value="150">1TB SSD - €150</option>
+                        <option value="200">2TB SSD - €200</option>
+                    </select>
+                </div>
+                <button type="button" id="calculate-btn">Bereken Totale Prijs</button>
+            </form>
+            <p id="total-price">Totale prijs: €0</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Bullish PC's. Alle rechten voorbehouden.</p>
+    </footer>
+    <script>
+        document.getElementById('calculate-btn').addEventListener('click', () => {
+            const cpu = parseInt(document.getElementById('cpu').value);
+            const gpu = parseInt(document.getElementById('gpu').value);
+            const ram = parseInt(document.getElementById('ram').value);
+            const storage = parseInt(document.getElementById('storage').value);
+
+            const total = cpu + gpu + ram + storage;
+            document.getElementById('total-price').textContent = `Totale prijs: €${total}`;
+        });
+    </script>
+</body>
+</html>
