@@ -114,22 +114,16 @@
     top: 192px;
     left: 488px;
 }
-/* Update buttons to use a gold and black color scheme */
 .custom .button{
     position: absolute;
     background: url(http://mrmcpowned.com/gamepad/xbox-assets/abxy.svgz);
     width: 48px;
     height: 48px;
-    border: 2px solid #000; /* black outline */
-    /* Apply a filter to shift the default colors to a gold tone */
-    filter: sepia(1) saturate(5) hue-rotate(15deg) brightness(1.1);
 }
 .custom .button.pressed{
     background-position-y: -48px;
     margin-top: 5px;
     opacity: 1;
-    border: 2px solid #000;
-    filter: sepia(1) saturate(5) hue-rotate(15deg) brightness(1.1);
 }
 .custom .a{
     background-position: 0 0;
