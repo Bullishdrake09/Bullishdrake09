@@ -1,0 +1,206 @@
+/*BEGIN Xbox One Controller Styling - Gold and White*/
+.controller.custom {
+    /* White base with gold border (feel free to adjust border thickness) */
+    background: #fff;
+    border: 10px solid #D4AF37;
+    border-radius: 20px;
+    height: 630px;
+    width: 750px;
+    margin-left: -375px;
+    margin-top: -285px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Use .white for a pure white theme */
+.custom.white {
+    background: #fff;
+    border-color: #fff;
+}
+
+/* New modifier to choose a gold base */
+.custom.gold {
+    background: #D4AF37;
+    border-color: #D4AF37;
+}
+
+/* Disconnected state */
+.custom.disconnected {
+    background: #ccc;
+}
+.custom.disconnected div {
+    display: none;
+}
+
+/* Triggers area */
+.custom .triggers {
+    width: 44px;
+    height: 121px;
+    position: absolute;
+    left: 152px;
+    background-color: #D4AF37;
+}
+.custom .trigger {
+    width: 88px;
+    height: 121px;
+    background-color: #fff;
+    opacity: 0;
+}
+.custom .trigger.left {
+    float: left;
+}
+.custom .trigger.right {
+    float: right;
+    transform: rotateY(180deg);
+}
+
+/* Bumpers */
+.custom .bumper {
+    width: 170px;
+    height: 61px;
+    background-color: #D4AF37;
+    opacity: 0;
+}
+.custom .bumpers {
+    position: absolute;
+    width: 536px;
+    height: 61px;
+    left: 107px;
+    top: 129px;
+}
+.custom .bumper.pressed {
+    opacity: 1;
+}
+.custom .bumper.left {
+    float: left;
+}
+.custom .bumper.right {
+    float: right;
+    transform: rotateY(180deg);
+}
+
+/* Quadrant (center circle) */
+.custom .quadrant {
+    position: absolute;
+    background-color: #D4AF37;
+    height: 45px;
+    width: 45px;
+    top: 258px;
+    left: 354px;
+    z-index: 0;
+}
+.custom .p0 { transform: rotate(0deg); }
+.custom .p1 { transform: rotate(90deg); }
+.custom .p2 { transform: rotate(270deg); }
+.custom .p3 { transform: rotate(180deg); }
+
+/* Arrows (Back and Start) */
+.custom .arrows {
+    position: absolute;
+    width: 141px;
+    height: 33px;
+    top: 264px;
+    left: 306px;
+}
+.custom .back, 
+.custom .start {
+    background-color: #fff;
+    width: 33px;
+    height: 33px;
+    opacity: 0;
+}
+.custom .back.pressed, 
+.custom .start.pressed {
+    opacity: 1;
+}
+.custom .back { float: left; }
+.custom .start { float: right; }
+
+/* ABXY buttons area */
+.custom .abxy {
+    position: absolute;
+    width: 153px;
+    height: 156px;
+    top: 192px;
+    left: 488px;
+}
+.custom .button {
+    position: absolute;
+    background-color: #D4AF37;
+    width: 48px;
+    height: 48px;
+}
+.custom .button.pressed {
+    background-color: #fff;
+    margin-top: 5px;
+    opacity: 1;
+}
+/* Positioning individual buttons as before */
+.custom .a { top: 108px; left: 55px; }
+.custom .b { top: 58px; right: 0px; }
+.custom .x { top: 58px; left: 4px; }
+.custom .y { left: 55px; top: 7px; }
+
+/* Sticks */
+.custom .sticks {
+    position: absolute;
+    width: 371px;
+    height: 196px;
+    top: 239px;
+    left: 144px;
+}
+.custom .stick {
+    position: absolute;
+    background-color: #D4AF37;
+    height: 83px;
+    width: 83px;
+}
+.custom .stick.pressed {
+    background-color: #fff;
+}
+.custom .stick.left { top: 0; left: 0; }
+.custom .stick.right { top: 113px; left: 288px; }
+
+/* D-Pad */
+.custom .dpad {
+    position: absolute;
+    width: 110px;
+    height: 111px;
+    top: 345px;
+    left: 223px;
+}
+.custom .face {
+    background-color: #D4AF37;
+    position: absolute;
+    opacity: 0;
+}
+.custom .face.pressed { opacity: 1; }
+.custom .face.up {
+    left: 38px;
+    top: 0px;
+    width: 34px;
+    height: 56px;
+}
+.custom .face.down {
+    left: 38px;
+    bottom: 0;
+    width: 34px;
+    height: 56px;
+}
+.custom .face.left {
+    width: 55px;
+    height: 35px;
+    top: 38px;
+    left: 0;
+}
+.custom .face.right {
+    width: 55px;
+    height: 35px;
+    top: 38px;
+    right: 0;
+}
+
+/* For half-size views */
+.custom.half { margin-top: -315px; }
+/*END Xbox One Controller Styling - Gold and White*/
