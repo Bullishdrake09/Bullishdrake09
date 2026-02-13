@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bullishdrake09 — Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b10;
+    --surface: #0d1117;
+    --border: #1e2a38;
+    --border-bright: #2d4060;
+    --accent: #00e5ff;
+    --accent2: #ff3e6c;
+    --accent3: #7c3aed;
+    --text: #c8d8e8;
+    --text-dim: #4a6080;
+    --text-bright: #eaf4ff;
+    --glow: rgba(0, 229, 255, 0.15);
+    --glow-red: rgba(255, 62, 108, 0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s, width 0.2s, height 0.2s, opacity 0.2s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+    opacity: 0.5;
+  }
+  .cursor.hovering { width: 6px; height: 6px; }
+  .cursor-ring.hovering { width: 56px; height: 56px; border-color: var(--accent2); opacity: 1; }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glowing orbs */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb2 {
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanline effect */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 60px 0 0;
+    position: relative;
+  }
+
+  .header-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+
+  .header-tag::before {
+    content: '// ';
+    color: var(--text-dim);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    color: var(--text-bright);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 .accent-word {
+    color: var(--accent);
+    -webkit-text-stroke: 1px var(--accent);
+    text-shadow: 0 0 40px rgba(0,229,255,0.4), 0 0 80px rgba(0,229,255,0.15);
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 24px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+    max-width: 480px;
+    line-height: 1.8;
+  }
+
+  .header-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3), transparent);
+    margin: 40px 0 60px;
+    opacity: 0;
+    animation: fadeIn 1s 0.5s forwards;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-label span {
+    color: var(--accent);
+  }
+
+  /* ── GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 80px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    position: relative;
+    background: var(--surface);
+    padding: 32px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    transition: background 0.25s;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .card.visible {
+    animation: cardReveal 0.5s forwards;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--glow), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--card-accent, var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover::after { transform: scaleX(1); }
+
+  .card:hover { background: #111a26; }
+
+  .card-icon {
+    font-size: 28px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    flex-shrink: 0;
+  }
+
+  .card:hover .card-icon {
+    border-color: var(--card-accent, var(--accent));
+    box-shadow: 0 0 20px rgba(0,229,255,0.15);
+  }
+
+  .card-category {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--card-accent, var(--accent));
+    font-family: 'Space Mono', monospace;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-bright);
+    line-height: 1.2;
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-title { color: #fff; }
+
+  .card-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    flex: 1;
+  }
+
+  .card-link-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+    transition: color 0.2s;
+    letter-spacing: 1px;
+    margin-top: auto;
+  }
+
+  .card:hover .card-link-label { color: var(--card-accent, var(--accent)); }
+
+  .card-link-label .arrow {
+    transition: transform 0.2s;
+  }
+
+  .card:hover .card-link-label .arrow { transform: translateX(4px); }
+
+  /* Corner decoration */
+  .card-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-left: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .card:hover .card-corner {
+    border-color: var(--card-accent, var(--accent));
+  }
+
+  /* ── FEATURED (large) card ── */
+  .card.featured {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    padding: 48px;
+  }
+
+  .card.featured .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card.featured .card-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .card.featured .card-title {
+    font-size: 28px;
+  }
+
+  .card.featured::before {
+    background: linear-gradient(135deg, var(--glow-red), transparent 50%);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--text-bright);
+    letter-spacing: 2px;
+  }
+
+  .footer-brand span { color: var(--accent); }
+
+  /* ── NOISE overlay ── */
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* Glitch effect for title */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .glitch::before {
+    color: var(--accent2);
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    transform: translateX(-3px);
+    animation: glitch1 4s infinite;
+    opacity: 0;
+  }
+  .glitch::after {
+    color: var(--accent);
+    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+    transform: translateX(3px);
+    animation: glitch2 4s infinite;
+    opacity: 0;
+  }
+  @keyframes glitch1 {
+    0%, 95%, 100% { opacity: 0; transform: translateX(-3px); }
+    96% { opacity: 0.8; transform: translateX(-3px) skewX(-5deg); }
+    97% { opacity: 0; }
+    98% { opacity: 0.6; transform: translateX(2px); }
+    99% { opacity: 0; }
+  }
+  @keyframes glitch2 {
+    0%, 94%, 100% { opacity: 0; transform: translateX(3px); }
+    95% { opacity: 0.6; transform: translateX(3px) skewX(5deg); }
+    96.5% { opacity: 0; }
+    97.5% { opacity: 0.4; transform: translateX(-2px); }
+    99% { opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .card.featured {
+      flex-direction: column;
+      gap: 24px;
+      padding: 32px;
+    }
+    .stats-bar { gap: 24px; }
+    .stat-divider { display: none; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="orb2"></div>
+<div class="scanlines"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="container">
+  <header>
+    <div class="header-tag">Portfolio Hub — v2.0</div>
+    <h1>
+      <span class="glitch" data-text="BULLISH">BULLISH</span><br>
+      <span class="accent-word glitch" data-text="DRAKE09">DRAKE09</span>
+    </h1>
+    <p class="header-sub">
+      <span class="live-dot"></span> Builder. Modder. Developer. — All my projects and sites :).
+    </p>
+    <div class="header-line"></div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-num">11</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Hours poured in</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Human behind it all</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- APPS -->
+  <div class="section-label"><span>#</span> Apps & Tools</div>
+  <div class="cards-grid" id="grid-apps">
+
+    <a class="card featured" href="https://kryonix.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #00e5ff;">
+      <div class="card-icon">💬</div>
+      <div class="card-body">
+        <div class="card-category">Chat Application</div>
+        <div class="card-title">Kryonix Chat</div>
+        <div class="card-desc">A fully self-built chat application. Real-time messaging, custom interface, and all under your own domain. No Discord, no Slack — pure, homegrown comms.</div>
+        <div class="card-link-label">Launch App <span class="arrow">→</span></div>
+      </div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://yt.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #ff3e6c;">
+      <div class="card-icon">📥</div>
+      <div class="card-category">Utility</div>
+      <div class="card-title">YT Downloader</div>
+      <div class="card-desc">Download YouTube videos directly from your browser. No third-party services — your own infrastructure, your own rules.</div>
+      <div class="card-link-label">Open Tool <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://videoconverter.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #f59e0b;">
+      <div class="card-icon">🎞️</div>
+      <div class="card-category">Utility</div>
+      <div class="card-title">Video Converter</div>
+      <div class="card-desc">Convert video files between formats effortlessly. Drop in a file, pick an output format, and go. Clean and simple.</div>
+      <div class="card-link-label">Convert Now <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://copyflix.bullishdrake09.com/login" target="_blank" rel="noopener"
+       style="--card-accent: #7c3aed;">
+      <div class="card-icon">🎬</div>
+      <div class="card-category">Streaming Service</div>
+      <div class="card-title">Copyflix</div>
+      <div class="card-desc">Your own private video streaming platform. Browse, login, and watch — built from scratch with your own backend. Netflix who?</div>
+      <div class="card-link-label">Watch Now <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+  </div>
+
+  <!-- MEME PROJECTS -->
+  <div class="section-label"><span>#</span> Meme Projects</div>
+  <div class="cards-grid" id="grid-meme">
+
+    <a class="card" href="https://sigmaschool.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #34d399;">
+      <div class="card-icon">🎓</div>
+      <div class="card-category">Meme · Education</div>
+      <div class="card-title">Sigma School</div>
+      <div class="card-desc">The ultimate meme take on SmartSchool. A whole educational platform, but make it sigma. Results may vary, grindset guaranteed.</div>
+      <div class="card-link-label">Attend Class <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://bookmidgets.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #fb923c;">
+      <div class="card-icon">📚</div>
+      <div class="card-category">Meme · Education</div>
+      <div class="card-title">Bookmidgets</div>
+      <div class="card-desc">BookWidgets but built with questionable energy and full commitment to the bit. Interactive exercises for the sigma student.</div>
+      <div class="card-link-label">Do Homework <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+  </div>
+
+  <!-- GAMING & COMMUNITY -->
+  <div class="section-label"><span>#</span> Gaming & Community</div>
+  <div class="cards-grid" id="grid-gaming">
+
+    <a class="card" href="https://sbc.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #22d3ee;">
+      <div class="card-icon">⛏️</div>
+      <div class="card-category">Minecraft · Skyblock</div>
+      <div class="card-title">SBC — Skyblock Carry</div>
+      <div class="card-desc">Your go-to hub for Skyblock carries. Whether you need runs, advice, or just to flex — this is the place. Join the carry squad.</div>
+      <div class="card-link-label">Join Server <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://switchmodding.bullishdrake09.com/" target="_blank" rel="noopener"
+       style="--card-accent: #e879f9;">
+      <div class="card-icon">🕹️</div>
+      <div class="card-category">Nintendo Switch</div>
+      <div class="card-title">Switch Modding</div>
+      <div class="card-desc">A full resource site dedicated to Nintendo Switch modding. Guides, tools, and everything you need to unlock your console's true potential.</div>
+      <div class="card-link-label">Start Modding <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://beatleader.xyz/u/76561199175070337" target="_blank" rel="noopener"
+       style="--card-accent: #f43f5e;">
+      <div class="card-icon">🥊</div>
+      <div class="card-category">Beat Saber · VR</div>
+      <div class="card-title">Beat Saber Stats</div>
+      <div class="card-desc">Live Beat Saber performance stats on BeatLeader. Track scores, rankings, and PP — see how the blade swings in ranked play.</div>
+      <div class="card-link-label">View Stats <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+    <a class="card" href="https://discord.gg/xCEEFZmdDA" target="_blank" rel="noopener"
+       style="--card-accent: #818cf8;">
+      <div class="card-icon">🎙️</div>
+      <div class="card-category">Community</div>
+      <div class="card-title">Discord Server</div>
+      <div class="card-desc">The official Bullishdrake09 Discord. Gaming, memes, projects, and general chaos. Drop in and say hi — community always welcome.</div>
+      <div class="card-link-label">Join Discord <span class="arrow">→</span></div>
+      <div class="card-corner"></div>
+    </a>
+
+  </div>
+
+  <!-- DEVELOPER -->
+  <div class="section-label"><span>#</span> Developer</div>
+  <div class="cards-grid" id="grid-dev">
+
+    <a class="card featured" href="https://github.com/Bullishdrake09" target="_blank" rel="noopener"
+       style="--card-accent: #e2e8f0;">
+      <div class="card-icon" style="font-size:36px;">🐙</div>
+      <div class="card-body">
+        <div class="card-category" style="color: #e2e8f0;">Open Source · GitHub</div>
+        <div class="card-title">GitHub Profile</div>
+        <div class="card-desc">All the code behind everything above (and more) lives here. Browse repos, star projects, fork what you like — open source and proud of it.</div>
+        <div class="card-link-label">View Profile <span class="arrow">→</span></div>
+      </div>
+      <div class="card-corner"></div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-brand">BULLISH<span>DRAKE09</span></div>
+    <div>// All systems operational &nbsp;·&nbsp; <span class="live-dot"></span> Live</div>
+  </footer>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  // Ring follows with lag
+  (function animateRing() {
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Hover effects on links
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hovering');
+      ring.classList.add('hovering');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hovering');
+      ring.classList.remove('hovering');
+    });
+  });
+
+  // Scroll-triggered card reveals
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 80;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => observer.observe(card));
+
+  // Parallax on header orb
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+    document.querySelector('.orb2').style.transform = `translate(${x}px, ${y}px)`;
+  });
+</script>
+</body>
+</html>
