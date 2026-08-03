@@ -1,1 +1,1 @@
-Got my own site running at kryonix.be
+Got my own site running at www.kryonix.be
