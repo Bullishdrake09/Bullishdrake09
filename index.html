@@ -2,744 +2,276 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kryonix — Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #080b10;
-    --surface: #0d1117;
-    --border: #1e2a38;
-    --border-bright: #2d4060;
-    --accent: #00e5ff;
-    --accent2: #ff3e6c;
-    --accent3: #7c3aed;
-    --text: #c8d8e8;
-    --text-dim: #4a6080;
-    --text-bright: #eaf4ff;
-    --glow: rgba(0, 229, 255, 0.15);
-    --glow-red: rgba(255, 62, 108, 0.12);
-  }
+:root{
+  --bg:#07080b; --text:#d6dae3; --dim:#8a91a1; --bright:#f4f6fa;
+  --glass:rgba(18,20,26,.6); --line:rgba(255,255,255,.1);
+  --c1:#9db4d9; --c2:#c9a27a; --c3:#6f7fa8;
+  --display:'Unbounded','Arial Black',sans-serif; --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);overflow-x:hidden;line-height:1.6}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;
+  background:radial-gradient(ellipse at 50% 60%,#14171f 0%,#07080b 70%)}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 40%,rgba(5,6,13,.85) 100%)}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;z-index:50;transform-origin:left;transform:scaleX(0);
+  background:var(--c1)}
+main{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* HERO */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:80px 0}
+.tag{font-size:12px;letter-spacing:.35em;text-transform:uppercase;color:var(--c1);margin-bottom:22px}
+.tag i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c1);margin-right:10px;animation:blink 1.8s infinite}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(46px,11vw,150px);line-height:.95;letter-spacing:-.03em;color:var(--bright);text-transform:uppercase}
+h1 span{display:block;background:linear-gradient(90deg,#e4e9f4,#7d879c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:28px;max-width:520px;color:var(--dim);font-size:14px}
+.stats{display:flex;gap:36px;margin-top:44px;flex-wrap:wrap}
+.stat b{display:block;font-family:var(--display);font-size:34px;color:var(--bright)}
+.stat small{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim)}
+.scroll{margin-top:56px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:14px}
+.scroll::after{content:'';width:1px;height:46px;background:linear-gradient(var(--c1),transparent);animation:drip 2s infinite}
 
-  html { scroll-behavior: smooth; }
+/* SECTIONS */
+section{min-height:80svh;display:flex;flex-direction:column;justify-content:center;padding:70px 0}
+.label{display:flex;align-items:center;gap:16px;margin-bottom:34px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.label b{font-family:var(--display);color:var(--c2);font-size:13px}
+.label::after{content:'';flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;perspective:1000px}
+.card{position:relative;display:flex;flex-direction:column;gap:12px;padding:28px;text-decoration:none;color:inherit;
+  background:var(--glass);border:1px solid var(--line);border-radius:18px;
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  opacity:0;transform:translateY(40px) rotateX(10deg);transition:opacity .7s,transform .25s ease-out,border-color .3s,box-shadow .3s;overflow:hidden}
+.card.in{opacity:1;transform:translateY(0) rotateX(0)}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.07),transparent 55%);opacity:0;transition:opacity .3s}
+.card:hover{border-color:rgba(255,255,255,.28);box-shadow:0 18px 40px -20px rgba(0,0,0,.8)}
+.card:hover::before{opacity:1}
+.card.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:32px;padding:38px}
+.ico{font-size:34px;width:62px;height:62px;flex-shrink:0;display:grid;place-items:center;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);position:relative}
+.card.wide .ico{width:84px;height:84px;font-size:44px}
+.cat{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--c1);position:relative}
+.ttl{font-family:var(--display);font-weight:700;font-size:20px;color:var(--bright);line-height:1.2;position:relative}
+.card.wide .ttl{font-size:30px}
+.desc{font-size:12.5px;color:var(--dim);flex:1;position:relative}
+.go{font-size:12px;letter-spacing:.12em;color:var(--dim);position:relative;transition:color .2s}
+.go em{font-style:normal;display:inline-block;transition:transform .2s}
+.card:hover .go{color:var(--bright)}
+.card:hover .go em{transform:translateX(6px)}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    min-height: 100vh;
-    overflow-x: hidden;
-    cursor: none;
-  }
+footer{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:40px 24px 60px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim)}
+footer b{font-family:var(--display);color:var(--bright);letter-spacing:.1em}
+footer b span{color:var(--c1)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c1);margin-right:8px;animation:blink 2s infinite}
 
-a, button, [role="button"] { cursor: none; }
-  
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: screen;
-    transform: translate(-50%, -50%);
-    transition: transform 0.05s, width 0.2s, height 0.2s, opacity 0.2s;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
-    opacity: 0.5;
-  }
-  .cursor.hovering { width: 6px; height: 6px; }
-  .cursor-ring.hovering { width: 56px; height: 56px; border-color: var(--accent2); opacity: 1; }
-
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Glowing orbs */
-  body::after {
-    content: '';
-    position: fixed;
-    top: -20%;
-    left: -10%;
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .orb2 {
-    position: fixed;
-    bottom: -20%;
-    right: -10%;
-    width: 50vw;
-    height: 50vw;
-    background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Scanline effect */
-  .scanlines {
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ── HEADER ── */
-  header {
-    padding: 60px 0 0;
-    position: relative;
-  }
-
-  .header-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    opacity: 0;
-    animation: fadeUp 0.6s 0.1s forwards;
-  }
-
-  .header-tag::before {
-    content: '// ';
-    color: var(--text-dim);
-  }
-
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 12vw, 140px);
-    line-height: 0.9;
-    letter-spacing: -2px;
-    color: var(--text-bright);
-    opacity: 0;
-    animation: fadeUp 0.7s 0.2s forwards;
-    position: relative;
-    display: inline-block;
-  }
-
-  h1 .accent-word {
-    color: var(--accent);
-    -webkit-text-stroke: 1px var(--accent);
-    text-shadow: 0 0 40px rgba(0,229,255,0.4), 0 0 80px rgba(0,229,255,0.15);
-  }
-
-  .header-sub {
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-top: 24px;
-    letter-spacing: 1px;
-    opacity: 0;
-    animation: fadeUp 0.7s 0.35s forwards;
-    max-width: 480px;
-    line-height: 1.8;
-  }
-
-  .header-line {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), var(--accent3), transparent);
-    margin: 40px 0 60px;
-    opacity: 0;
-    animation: fadeIn 1s 0.5s forwards;
-  }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-bottom: 64px;
-    opacity: 0;
-    animation: fadeUp 0.7s 0.5s forwards;
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .stat-divider {
-    width: 1px;
-    background: var(--border);
-    align-self: stretch;
-  }
-
-  /* ── SECTION HEADER ── */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 32px;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .section-label span {
-    color: var(--accent);
-  }
-
-  /* ── GRID ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 80px;
-  }
-
-  /* ── CARD ── */
-  .card {
-    position: relative;
-    background: var(--surface);
-    padding: 32px;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow: hidden;
-    transition: background 0.25s;
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  .card.visible {
-    animation: cardReveal 0.5s forwards;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--glow), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .card:hover::before { opacity: 1; }
-
-  .card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--card-accent, var(--accent));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .card:hover::after { transform: scaleX(1); }
-
-  .card:hover { background: #111a26; }
-
-  .card-icon {
-    font-size: 28px;
-    width: 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    flex-shrink: 0;
-  }
-
-  .card:hover .card-icon {
-    border-color: var(--card-accent, var(--accent));
-    box-shadow: 0 0 20px rgba(0,229,255,0.15);
-  }
-
-  .card-category {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--card-accent, var(--accent));
-    font-family: 'Space Mono', monospace;
-  }
-
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--text-bright);
-    line-height: 1.2;
-    transition: color 0.2s;
-  }
-
-  .card:hover .card-title { color: #fff; }
-
-  .card-desc {
-    font-size: 12px;
-    line-height: 1.8;
-    color: var(--text-dim);
-    flex: 1;
-  }
-
-  .card-link-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--text-dim);
-    transition: color 0.2s;
-    letter-spacing: 1px;
-    margin-top: auto;
-  }
-
-  .card:hover .card-link-label { color: var(--card-accent, var(--accent)); }
-
-  .card-link-label .arrow {
-    transition: transform 0.2s;
-  }
-
-  .card:hover .card-link-label .arrow { transform: translateX(4px); }
-
-  /* Corner decoration */
-  .card-corner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    border-left: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.3s;
-  }
-
-  .card:hover .card-corner {
-    border-color: var(--card-accent, var(--accent));
-  }
-
-  /* ── FEATURED (large) card ── */
-  .card.featured {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    align-items: center;
-    gap: 48px;
-    padding: 48px;
-  }
-
-  .card.featured .card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .card.featured .card-icon {
-    width: 80px;
-    height: 80px;
-    font-size: 40px;
-    flex-shrink: 0;
-  }
-
-  .card.featured .card-title {
-    font-size: 28px;
-  }
-
-  .card.featured::before {
-    background: linear-gradient(135deg, var(--glow-red), transparent 50%);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: gap;
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
-
-  .footer-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    color: var(--text-bright);
-    letter-spacing: 2px;
-  }
-
-  .footer-brand span { color: var(--accent); }
-
-  /* ── NOISE overlay ── */
-  .noise {
-    position: fixed;
-    inset: 0;
-    opacity: 0.025;
-    pointer-events: none;
-    z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes cardReveal {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .live-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-
-  /* Glitch effect for title */
-  .glitch {
-    position: relative;
-  }
-  .glitch::before,
-  .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-  .glitch::before {
-    color: var(--accent2);
-    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-    transform: translateX(-3px);
-    animation: glitch1 4s infinite;
-    opacity: 0;
-  }
-  .glitch::after {
-    color: var(--accent);
-    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
-    transform: translateX(3px);
-    animation: glitch2 4s infinite;
-    opacity: 0;
-  }
-  @keyframes glitch1 {
-    0%, 95%, 100% { opacity: 0; transform: translateX(-3px); }
-    96% { opacity: 0.8; transform: translateX(-3px) skewX(-5deg); }
-    97% { opacity: 0; }
-    98% { opacity: 0.6; transform: translateX(2px); }
-    99% { opacity: 0; }
-  }
-  @keyframes glitch2 {
-    0%, 94%, 100% { opacity: 0; transform: translateX(3px); }
-    95% { opacity: 0.6; transform: translateX(3px) skewX(5deg); }
-    96.5% { opacity: 0; }
-    97.5% { opacity: 0.4; transform: translateX(-2px); }
-    99% { opacity: 0; }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .card.featured {
-      flex-direction: column;
-      gap: 24px;
-      padding: 32px;
-    }
-    .stats-bar { gap: 24px; }
-    .stat-divider { display: none; }
-    .cards-grid { grid-template-columns: 1fr; }
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+@keyframes blink{50%{opacity:.25}}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:700px){.card.wide{flex-direction:column;align-items:flex-start;gap:18px;padding:28px}}
+@media(prefers-reduced-motion:reduce){.card{transition:opacity .3s}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<canvas id="bg"></canvas>
+<div class="vignette"></div>
+<div id="bar"></div>
 
-<div class="noise"></div>
-<div class="orb2"></div>
-<div class="scanlines"></div>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<div class="container">
-  <header>
-    <div class="header-tag">Kryonix links</div>
-    <h1>
-      <span class="glitch" data-text="BULLISH">KRYONIX</span><br>
-      <span class="accent-word glitch" data-text="DRAKE09">LINKS</span>
-    </h1>
-    <p class="header-sub">
-      <span class="live-dot"></span> Builder. Modder. Developer. — All by Bullishdrake09.
-    </p>
-    <div class="header-line"></div>
-
-    <div class="stats-bar">
-      <div class="stat">
-        <span class="stat-num">9</span>
-        <span class="stat-label">Projects</span>
-      </div>
-      <div class="stat-divider"></div>
+<main>
+  <div class="hero">
+    <div class="tag"><i></i>Kryonix links</div>
+    <h1>Kryonix<span>Links</span></h1>
+    <p class="sub">Builder. Modder. Developer. — All by Bullishdrake09.</p>
+    <div class="stats">
+      <div class="stat"><b data-n="9">0</b><small>Projects</small></div>
+      <div class="stat"><b data-n="3">0</b><small>Sections</small></div>
     </div>
-  </header>
-
-  <!-- APPS -->
-  <div class="section-label"><span>#</span> Apps & Tools</div>
-  <div class="cards-grid" id="grid-apps">
-
-    <a class="card featured" href="https://kryonix.kryonix.be/" target="_blank" rel="noopener"
-       style="--card-accent: #00e5ff;">
-      <div class="card-icon">💬</div>
-      <div class="card-body">
-        <div class="card-category">Chat Application</div>
-        <div class="card-title">Kryonix</div>
-        <div class="card-desc">A fully self-built chat application. Real-time messaging, custom interface.</div>
-        <div class="card-link-label">Launch App <span class="arrow">→</span></div>
-      </div>
-      <div class="card-corner"></div>
-    </a>
-
-    <a class="card" href="https://copyflix.kryonix.be/login" target="_blank" rel="noopener"
-       style="--card-accent: #7c3aed;">
-      <div class="card-icon">🎬</div>
-      <div class="card-category">Streaming Service</div>
-      <div class="card-title">Copyflix</div>
-      <div class="card-desc">My own private video streaming platform. Netflix who?</div>
-      <div class="card-link-label">Watch Now <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
-
-    <a class="card" href="https://vpn.kryonix.be/" target="_blank" rel="noopener"
-       style="--card-accent: #06b6d4;">
-      <div class="card-icon">🔒</div>
-      <div class="card-category">VPN Service</div>
-      <div class="card-title">VPN</div>
-      <div class="card-desc">Secure VPN service for private browsing and network protection.</div>
-      <div class="card-link-label">Access VPN <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
-
-    <a class="card" href="https://ai.kryonix.be/" target="_blank" rel="noopener"
-       style="--card-accent: #8b5cf6;">
-      <div class="card-icon">🤖</div>
-      <div class="card-category">AI · Beta</div>
-      <div class="card-title">AI Assistant</div>
-      <div class="card-desc">My own AI assistant. Still in beta, but growing smarter every day.</div>
-      <div class="card-link-label">Try AI <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
-
+    <div class="scroll">Scroll to fly through</div>
   </div>
 
-  <!-- GAMING & COMMUNITY -->
-  <div class="section-label"><span>#</span> Gaming & Community</div>
-  <div class="cards-grid" id="grid-gaming">
+  <section>
+    <div class="label"><b>01</b> Apps &amp; Tools</div>
+    <div class="grid">
+      <a class="card wide" style="--a:#00f0ff" href="https://kryonix.kryonix.be/" target="_blank" rel="noopener">
+        <div class="ico">💬</div>
+        <div><div class="cat">Chat Application</div><div class="ttl">Kryonix</div>
+        <div class="desc">A fully self-built chat application. Real-time messaging, custom interface.</div>
+        <div class="go">Launch App <em>→</em></div></div>
+      </a>
+      <a class="card" style="--a:#8b5cf6" href="https://copyflix.kryonix.be/login" target="_blank" rel="noopener">
+        <div class="ico">🎬</div><div class="cat">Streaming Service</div><div class="ttl">Copyflix</div>
+        <div class="desc">My own private video streaming platform. Netflix who?</div><div class="go">Watch Now <em>→</em></div>
+      </a>
+      <a class="card" style="--a:#06b6d4" href="https://vpn.kryonix.be/" target="_blank" rel="noopener">
+        <div class="ico">🔒</div><div class="cat">VPN Service</div><div class="ttl">VPN</div>
+        <div class="desc">Secure VPN service for private browsing and network protection.</div><div class="go">Access VPN <em>→</em></div>
+      </a>
+      <a class="card" style="--a:#a78bfa" href="https://ai.kryonix.be/" target="_blank" rel="noopener">
+        <div class="ico">🤖</div><div class="cat">AI · Beta</div><div class="ttl">AI Assistant</div>
+        <div class="desc">My own AI assistant. Still in beta, but growing smarter every day.</div><div class="go">Try AI <em>→</em></div>
+      </a>
+    </div>
+  </section>
 
-    <a class="card" href="https://sbc.kryonix.be/" target="_blank" rel="noopener"
-       style="--card-accent: #22d3ee;">
-      <div class="card-icon">⛏️</div>
-      <div class="card-category">Minecraft · Skyblock</div>
-      <div class="card-title">SBC — Skyblock Carry</div>
-      <div class="card-desc">Skyblock carries hub. Discontinued but archived for the memories.</div>
-      <div class="card-link-label">View Archive <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
+  <section>
+    <div class="label"><b>02</b> Gaming &amp; Community</div>
+    <div class="grid">
+      <a class="card" style="--a:#22d3ee" href="https://sbc.kryonix.be/" target="_blank" rel="noopener">
+        <div class="ico">⛏️</div><div class="cat">Minecraft · Skyblock</div><div class="ttl">SBC — Skyblock Carry</div>
+        <div class="desc">Skyblock carries hub. Discontinued but archived for the memories.</div><div class="go">View Archive <em>→</em></div>
+      </a>
+      <a class="card" style="--a:#e879f9" href="https://switchmodding.kryonix.be/" target="_blank" rel="noopener">
+        <div class="ico">🕹️</div><div class="cat">Nintendo Switch</div><div class="ttl">Switch Modding</div>
+        <div class="desc">A full resource site dedicated to Nintendo Switch modding. Guides, tools, and everything you need to unlock your console’s true potential.</div><div class="go">Start Modding <em>→</em></div>
+      </a>
+      <a class="card" style="--a:#ff2e6c" href="https://beatleader.xyz/u/76561199175070337" target="_blank" rel="noopener">
+        <div class="ico">🥊</div><div class="cat">Beat Saber · VR</div><div class="ttl">Beat Saber Stats</div>
+        <div class="desc">Live Beat Saber performance stats on BeatLeader. Track my scores, rankings, and PP.</div><div class="go">View Stats <em>→</em></div>
+      </a>
+      <a class="card" style="--a:#818cf8" href="https://discord.gg/xCEEFZmdDA" target="_blank" rel="noopener">
+        <div class="ico">🎙️</div><div class="cat">Community</div><div class="ttl">Discord Server</div>
+        <div class="desc">My official Bullishdrake09 Discord. Gaming, memes, projects, ...</div><div class="go">Join Discord <em>→</em></div>
+      </a>
+    </div>
+  </section>
 
-    <a class="card" href="https://switchmodding.kryonix.be/" target="_blank" rel="noopener"
-       style="--card-accent: #e879f9;">
-      <div class="card-icon">🕹️</div>
-      <div class="card-category">Nintendo Switch</div>
-      <div class="card-title">Switch Modding</div>
-      <div class="card-desc">A full resource site dedicated to Nintendo Switch modding. Guides, tools, and everything you need to unlock your console's true potential.</div>
-      <div class="card-link-label">Start Modding <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
+  <section>
+    <div class="label"><b>03</b> Developer</div>
+    <div class="grid">
+      <a class="card wide" style="--a:#e2e8f0" href="https://github.com/Bullishdrake09" target="_blank" rel="noopener">
+        <div class="ico">🐙</div>
+        <div><div class="cat">Open Source · GitHub</div><div class="ttl">GitHub Profile</div>
+        <div class="desc">All the code behind everything above (and more) lives here. Browse repos, star projects, fork what you like — open source and proud of it.</div>
+        <div class="go">View Profile <em>→</em></div></div>
+      </a>
+    </div>
+  </section>
+</main>
 
-    <a class="card" href="https://beatleader.xyz/u/76561199175070337" target="_blank" rel="noopener"
-       style="--card-accent: #f43f5e;">
-      <div class="card-icon">🥊</div>
-      <div class="card-category">Beat Saber · VR</div>
-      <div class="card-title">Beat Saber Stats</div>
-      <div class="card-desc">Live Beat Saber performance stats on BeatLeader. Track my scores, rankings, and PP.</div>
-      <div class="card-link-label">View Stats <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
+<footer>
+  <b>KRYONIX<span>LINKS</span></b>
+  <div><span class="dot"></span>All systems operational · Live</div>
+</footer>
 
-    <a class="card" href="https://discord.gg/xCEEFZmdDA" target="_blank" rel="noopener"
-       style="--card-accent: #818cf8;">
-      <div class="card-icon">🎙️</div>
-      <div class="card-category">Community</div>
-      <div class="card-title">Discord Server</div>
-      <div class="card-desc">My official Bullishdrake09 Discord. Gaming, memes, projects, ...</div>
-      <div class="card-link-label">Join Discord <span class="arrow">→</span></div>
-      <div class="card-corner"></div>
-    </a>
-
-  </div>
-
-  <!-- DEVELOPER -->
-  <div class="section-label"><span>#</span> Developer</div>
-  <div class="cards-grid" id="grid-dev">
-
-    <a class="card featured" href="https://github.com/Bullishdrake09" target="_blank" rel="noopener"
-       style="--card-accent: #e2e8f0;">
-      <div class="card-icon" style="font-size:36px;">🐙</div>
-      <div class="card-body">
-        <div class="card-category" style="color: #e2e8f0;">Open Source · GitHub</div>
-        <div class="card-title">GitHub Profile</div>
-        <div class="card-desc">All the code behind everything above (and more) lives here. Browse repos, star projects, fork what you like — open source and proud of it.</div>
-        <div class="card-link-label">View Profile <span class="arrow">→</span></div>
-      </div>
-      <div class="card-corner"></div>
-    </a>
-
-  </div>
-
-  <footer>
-    <div class="footer-brand">KRYONIX<span>LINKS</span></div>
-    <div>// All systems operational &nbsp;·&nbsp; <span class="live-dot"></span> Live</div>
-  </footer>
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = -100, my = -100, rx = -100, ry = -100;
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar = document.getElementById('bar');
+  var mx = 0, my = 0, cur = 0, last = 0;
+  addEventListener('pointermove', function(e){ mx = e.clientX/innerWidth-.5; my = e.clientY/innerHeight-.5; });
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+  function progress(){ var h = document.documentElement.scrollHeight - innerHeight; return h > 0 ? Math.min(1, Math.max(0, scrollY/h)) : 0; }
+
+  // Card reveal + tilt
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){
+      var c = e.target, d = Array.prototype.indexOf.call(c.parentElement.children, c)*90;
+      setTimeout(function(){ c.classList.add('in'); }, d); io.unobserve(c);
+    }});
+  }, {threshold:.15});
+  document.querySelectorAll('.card').forEach(function(c){
+    io.observe(c);
+    c.addEventListener('pointermove', function(e){
+      var r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width, y = (e.clientY-r.top)/r.height;
+      c.style.setProperty('--mx', x*100+'%'); c.style.setProperty('--my', y*100+'%');
+      if(!reduce && c.classList.contains('in')) c.style.transform = 'perspective(800px) rotateY('+((x-.5)*10)+'deg) rotateX('+((.5-y)*10)+'deg) translateZ(6px)';
+    });
+    c.addEventListener('pointerleave', function(){ c.style.transform = ''; });
   });
 
-  // Ring follows with lag
-  (function animateRing() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  })();
-
-  // Hover effects on links
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('hovering');
-      ring.classList.add('hovering');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('hovering');
-      ring.classList.remove('hovering');
-    });
+  // Counters
+  document.querySelectorAll('[data-n]').forEach(function(el){
+    var n = +el.dataset.n, t0 = performance.now();
+    (function tick(t){ var k = Math.min(1,(t-t0)/1200); el.textContent = Math.round(n*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(tick); })(t0);
   });
 
-  // Scroll-triggered card reveals
-  const cards = document.querySelectorAll('.card');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 80;
-        setTimeout(() => entry.target.classList.add('visible'), delay);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+  if(!window.THREE){ addEventListener('scroll', function(){ bar.style.transform='scaleX('+progress()+')'; }); return; }
 
-  cards.forEach(card => observer.observe(card));
+  // 3D scene: neon tunnel you fly through while scrolling
+  var canvas = document.getElementById('bg');
+  var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  var scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x07080b, 0.016);
+  var camera = new THREE.PerspectiveCamera(72, 1, .1, 600);
+  var LEN = 360, RINGS = 64;
 
-  // Parallax on header orb
-  document.addEventListener('mousemove', e => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-    document.querySelector('.orb2').style.transform = `translate(${x}px, ${y}px)`;
-  });
+  var rings = [], i;
+  var rg = new THREE.TorusGeometry(15, .07, 6, 6);
+  for(i=0;i<RINGS;i++){
+    var m = new THREE.Mesh(rg, new THREE.MeshBasicMaterial({color:0x9db4d9, transparent:true, opacity:.35}));
+    m.position.z = -i*(LEN/RINGS); m.rotation.z = i*.12; scene.add(m); rings.push(m);
+  }
+
+  // star dust
+  var N = 2600, pos = new Float32Array(N*3);
+  for(i=0;i<N;i++){
+    var a = Math.random()*6.2832, r = 3+Math.random()*34;
+    pos[i*3] = Math.cos(a)*r; pos[i*3+1] = Math.sin(a)*r; pos[i*3+2] = -Math.random()*LEN - 20;
+  }
+  var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  var stars = new THREE.Points(pg, new THREE.PointsMaterial({color:0xbfc8d8, size:.15, transparent:true, opacity:.5, depthWrite:false}));
+  scene.add(stars);
+
+  // floating wireframe crystals
+  var shapes = [], geos = [new THREE.IcosahedronGeometry(1.6,0), new THREE.OctahedronGeometry(1.6,0), new THREE.TetrahedronGeometry(1.8,0)];
+  for(i=0;i<34;i++){
+    var s = new THREE.Mesh(geos[i%3], new THREE.MeshBasicMaterial({color:0x8a93a8, wireframe:true, transparent:true, opacity:.3}));
+    var an = Math.random()*6.2832, rr = 5+Math.random()*8;
+    s.position.set(Math.cos(an)*rr, Math.sin(an)*rr, -15-i*(LEN/34));
+    s.userData.sp = (Math.random()-.5)*1.2; s.scale.setScalar(.7+Math.random()*1.6);
+    scene.add(s); shapes.push(s);
+  }
+
+  // big hero core
+  var core = new THREE.Mesh(new THREE.IcosahedronGeometry(5,1), new THREE.MeshBasicMaterial({color:0x8a93a8, wireframe:true, transparent:true, opacity:.25}));
+  core.position.set(7,1,-26); scene.add(core);
+
+  function resize(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+  addEventListener('resize', resize); resize();
+
+  var clock = new THREE.Clock();
+  function frame(){
+    var t = clock.getElapsedTime(), p = progress();
+    cur += (p-cur)*(reduce?1:.06);
+    var vel = p-cur;
+    bar.style.transform = 'scaleX('+p+')';
+
+    camera.position.z = 6 - cur*(LEN-70);
+    camera.position.x += (mx*4 - camera.position.x)*.05;
+    camera.position.y += (-my*3 - camera.position.y)*.05;
+    camera.rotation.z = cur*Math.PI*1.4 + vel*5 + mx*.08;
+    camera.rotation.y = -mx*.15; camera.rotation.x = -my*.1;
+    camera.fov = 72 + Math.min(30, Math.abs(vel)*900); camera.updateProjectionMatrix();
+
+    for(var k=0;k<rings.length;k++){
+      var r = rings[k];
+      r.rotation.z += .0025*(k%2?1:-1);
+      r.material.color.setHSL(.6 + Math.sin(cur*3 + k*.05)*.04, .22, .5 + .1*Math.sin(t + k*.3));
+      r.scale.setScalar(1 + Math.sin(t*1.2 + k*.4)*.04);
+    }
+    for(k=0;k<shapes.length;k++){
+      var s = shapes[k];
+      s.rotation.x += .004*s.userData.sp; s.rotation.y += .006*s.userData.sp*2; s.position.y += Math.sin(t+k)*.003;
+      s.material.color.setHSL(.08 + cur*.04, .2, .6);
+    }
+    core.rotation.x = t*.15 + cur*4; core.rotation.y = t*.2;
+    core.material.color.setHSL(.6, .15, .6);
+    stars.rotation.z = t*.01;
+
+    renderer.render(scene, camera);
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+  if(reduce) addEventListener('scroll', frame, {passive:true});
+})();
 </script>
 </body>
 </html>
